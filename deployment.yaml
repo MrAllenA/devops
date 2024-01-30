@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cowsay-deploy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: cowsay
+  template:
+    metadata:
+      labels:
+        app: cowsay
+    spec:
+      containers:
+      - name: cowsay
+        image: mrallena/cowsay:latest
+        ports:
+        - containerPort: 4499
