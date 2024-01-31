@@ -44,7 +44,7 @@ jobs:
       - name: Docker configuration GCP
         run: |-
           gcloud auth print-access-token | docker login -u oauth2accesstoken --password-stdin https://$GKE_ZONE-docker.pkg.dev
-      
+    
       # Build the Docker image
       - name: Build GCP
         run: |-
