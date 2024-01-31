@@ -36,6 +36,7 @@ jobs:
 
       - name: Create Directory
         run: |
+              sudo mkdir app
               pwd
               ls
               echo "Directory created successfully!"
