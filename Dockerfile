@@ -10,6 +10,8 @@ WORKDIR /app/wisecow
 # Copy the shell script into the image
 COPY wisecow/ /app/wisecow
 
+RUN ls
+RUN pwd
 # Make the script executable (if needed)
 RUN chmod +x /app/wisecow/wisecow.sh
 # Define the default command to run when the container starts
