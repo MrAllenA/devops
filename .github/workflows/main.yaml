@@ -36,7 +36,6 @@ jobs:
 
       - name: Create Directory
         run: |
-              ls
               cd wisecow
               ls
               echo "Directory created successfully!"
