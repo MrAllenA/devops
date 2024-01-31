@@ -37,6 +37,8 @@ jobs:
       - name: Create Directory
         run: |
               sudo mkdir app
+              cd app
+              sudo mkdir wisecow
               pwd
               ls
               echo "Directory created successfully!"
