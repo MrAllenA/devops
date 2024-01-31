@@ -2,6 +2,10 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: cowsay-deploy
+env:
+  PROJECT_ID: ${{ secrets.GKE_PROJECT }}
+
+
 spec:
   replicas: 1
   selector:
@@ -14,6 +18,6 @@ spec:
     spec:
       containers:
       - name: cowsay
-        image: mrallena/cowsay:latest
+        image: us-central1-docker.pkg.dev/$PROJECT_ID/container/cowsay:test
         ports:
         - containerPort: 4499

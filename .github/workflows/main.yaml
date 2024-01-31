@@ -7,6 +7,13 @@ on:
     defaults:
         run:
            working-directory: /
+env:
+  PROJECT_ID: ${{ secrets.GKE_PROJECT }}
+  GKE_CLUSTER: autopilot-cluster-1    # Add your cluster name here.
+  GKE_ZONE: us-central1   # Add your cluster zone here.
+  GAR_REPO: container
+  IMAGE: cowsay # image name
+  IMAGE_TAG: test # image tag
 jobs:
   push_to_registry:
     name: Push Docker image to Docker Hub
@@ -21,6 +28,41 @@ jobs:
     steps:
       - name: Check out the repo
         uses: actions/checkout@v4
+      - uses: google-github-actions/setup-gcloud@1bee7de035d65ec5da40a31f8589e240eba8fde5
+        with:
+          service_account_key: ${{ secrets.GKE_SA_KEY }}
+          project_id: ${{ secrets.GKE_PROJECT }}
+      - run: |-
+          gcloud --quiet auth configure-docker
+
+      - uses: google-github-actions/get-gke-credentials@db150f2cc60d1716e61922b832eae71d2a45938f
+        with:
+          cluster_name: ${{ env.GKE_CLUSTER }}
+          location: ${{ env.GKE_ZONE }}
+          credentials: ${{ secrets.GKE_SA_KEY }}
+
+      - name: Docker configuration GCP
+        run: |-
+          gcloud auth print-access-token | docker login -u oauth2accesstoken --password-stdin https://$GKE_ZONE-docker.pkg.dev
+      
+      # Build the Docker image
+      - name: Build GCP
+        run: |-
+          docker build \
+            --tag "$GKE_ZONE-docker.pkg.dev/$PROJECT_ID/$GAR_REPO/$IMAGE:$IMAGE_TAG" \
+            --build-arg GITHUB_SHA="$GITHUB_SHA" \
+            --build-arg GITHUB_REF="$GITHUB_REF" \
+
+      - name: Publish GCP
+        run: |-
+          docker push "$GAR_ZONE-docker.pkg.dev/$PROJECT_ID/$GAR_REPO/$IMAGE:$IMAGE_TAG"
+
+          # Deploy the Docker image to the GKE cluster
+      - name: Deploy
+        run: |-
+          kubectl apply -f deployment.yaml
+          kubectl apply -f service.yaml
+          kubectl get pods
 
       - name: Log in to Docker Hub
         uses: docker/login-action@f4ef78c080cd8ba55a85445d5b36e214a81df20a
@@ -44,3 +86,4 @@ jobs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
+
