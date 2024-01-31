@@ -27,7 +27,7 @@ jobs:
 
       - name: Create folder
         run: |
-          git update-index --chmod=+x your_script.sh
+          git update-index --chmod=+x .\wisecow\wisecow.sh
           mkdir -p /app/wisecow
 
       - name: Build and push Docker image
