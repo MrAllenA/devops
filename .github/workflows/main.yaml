@@ -37,6 +37,7 @@ jobs:
       - name: Create Directory
         run: |
               sudo mkdir -p /app/wisecow
+              ls
               echo "Directory created successfully!"
 
 
