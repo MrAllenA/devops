@@ -48,7 +48,11 @@ jobs:
       # Build the Docker image
       - name: Build GCP
         run: |-
-          docker build --tag "us-central1-docker.pkg.dev/$PROJECT_ID/$GAR_REPO/$IMAGE:$IMAGE_TAG" --build-arg GITHUB_SHA="$GITHUB_SHA" --build-arg GITHUB_REF="$GITHUB_REF"
+          docker build \
+          --tag "us-central1-docker.pkg.dev/$PROJECT_ID/$GAR_REPO/$IMAGE:$IMAGE_TAG" \
+          --build-arg GITHUB_SHA="$GITHUB_SHA" \
+          --build-arg GITHUB_REF="$GITHUB_REF" \
+          .
 
       - name: Publish GCP
         run: |-
