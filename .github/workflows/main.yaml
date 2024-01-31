@@ -4,7 +4,9 @@ on:
   push:
   release:
     types: [published]
-
+    defaults:
+        run:
+           working-directory: /
 jobs:
   push_to_registry:
     name: Push Docker image to Docker Hub
@@ -15,6 +17,7 @@ jobs:
       # This is used to complete the identity challenge
       # with sigstore/fulcio when running outside of PRs.
       id-token: write
+
     steps:
       - name: Check out the repo
         uses: actions/checkout@v4
