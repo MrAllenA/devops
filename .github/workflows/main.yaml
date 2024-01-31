@@ -6,7 +6,7 @@ on:
     types: [published]
     defaults:
         run:
-           working-directory: ./app
+           working-directory: ./
 jobs:
   push_to_registry:
     name: Push Docker image to Docker Hub
