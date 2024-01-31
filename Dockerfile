@@ -11,7 +11,7 @@ WORKDIR /app/wisecow
 COPY wisecow/ /app/wisecow
 
 # Make the script executable (if needed)
-RUN chmod +x /app/wisecow/wisecow.sh
+RUN sudo chmod +x /app/wisecow/wisecow.sh
 # Define the default command to run when the container starts
 CMD ["sh", "-c", "./wisecow.sh"]
 
