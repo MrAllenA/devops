@@ -56,9 +56,9 @@ jobs:
 
       - name: Publish GCP
         run: |-
-          docker push "$GAR_ZONE-docker.pkg.dev/$PROJECT_ID/$GAR_REPO/$IMAGE:$IMAGE_TAG"
+          docker push "$GKE_ZONE-docker.pkg.dev/$PROJECT_ID/$GAR_REPO/$IMAGE:$IMAGE_TAG"
 
-          # Deploy the Docker image to the GKE cluster
+        # Deploy the Docker image to the GKE cluster
       - name: Deploy
         run: |-
           kubectl apply -f deployment.yaml
