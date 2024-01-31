@@ -34,14 +34,6 @@ jobs:
         with:
           images: mrallena/cowsay
 
-      - name: Create Directory
-        run: |
-              sudo mkdir app
-              cd app
-              sudo mkdir wisecow
-              pwd
-              ls
-              echo "Directory created successfully!"
 
 
       - name: Build and push Docker image
