@@ -14,6 +14,6 @@ spec:
     spec:
       containers:
       - name: cowsay
-        image: us-central1-docker.pkg.dev/${{ secrets.GKE_PROJECT }}/container/cowsay:test
+        image: gcr.io/us-central1-docker.pkg.dev/${{ secrets.GKE_PROJECT }}/container/cowsay
         ports:
         - containerPort: 4499
